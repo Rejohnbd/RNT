@@ -2,3 +2,6 @@
 /next-co/node_modules
 /next-co/.next
 
+# next-event
+/next-event/node_modules
+/next-event/.next

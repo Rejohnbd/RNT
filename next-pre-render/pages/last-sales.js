@@ -1,30 +1,30 @@
 import { useEffect, useState } from "react";
 import useSWR from "swr";
 
-function LastSalesPage() {
-  const [sales, setSales] = useState();
+function LastSalesPage(props) {
+  const [sales, setSales] = useState(props.sales);
   // const [isLoading, setIsLoading] = useState(false);
-  const fetcher = (url) => fetch(url).then((res) => res.json());
-  const { data, error } = useSWR(
-    "https://nextjs-course-89834-default-rtdb.firebaseio.com/sales.json",
-    fetcher
-  );
+  // const fetcher = (url) => fetch(url).then((res) => res.json());
+  // const { data, error } = useSWR(
+  //   "https://nextjs-course-89834-default-rtdb.firebaseio.com/sales.json",
+  //   fetcher
+  // );
 
-  useEffect(() => {
-    if (data) {
-      const tranformedSales = [];
+  // useEffect(() => {
+  //   if (data) {
+  //     const tranformedSales = [];
 
-      for (const key in data) {
-        tranformedSales.push({
-          id: key,
-          username: data[key].username,
-          volume: data[key].volume,
-        });
-      }
+  //     for (const key in data) {
+  //       tranformedSales.push({
+  //         id: key,
+  //         username: data[key].username,
+  //         volume: data[key].volume,
+  //       });
+  //     }
 
-      setSales(tranformedSales);
-    }
-  }, [data]);
+  //     setSales(tranformedSales);
+  //   }
+  // }, [data]);
 
   // useEffect(() => {
   //   setIsLoading(true);
@@ -45,11 +45,11 @@ function LastSalesPage() {
   //     });
   // }, []);
 
-  if (error) {
-    return <p>Failed to load.</p>;
-  }
+  // if (error) {
+  //   return <p>Failed to load.</p>;
+  // }
 
-  if (!data || !sales) {
+  if (!sales) {
     return <p>Loading...</p>;
   }
 
@@ -62,6 +62,25 @@ function LastSalesPage() {
       ))}
     </ul>
   );
+}
+
+export async function getStaticProps(context) {
+  const response = await fetch(
+    "https://nextjs-course-89834-default-rtdb.firebaseio.com/sales.json"
+  );
+  const data = await response.json();
+
+  const tranformedSales = [];
+
+  for (const key in data) {
+    tranformedSales.push({
+      id: key,
+      username: data[key].username,
+      volume: data[key].volume,
+    });
+  }
+
+  return { props: { sales: tranformedSales } };
 }
 
 export default LastSalesPage;

@@ -5,3 +5,6 @@
 # next-event
 /next-event/node_modules
 /next-event/.next
+
+#bs-react
+/bs-react/node_modules

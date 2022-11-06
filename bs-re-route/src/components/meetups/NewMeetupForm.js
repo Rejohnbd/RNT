@@ -4,7 +4,7 @@ import Card from "../ui/Card";
 
 import classes from "./NewMeetupForm.module.css";
 
-function NewMeetupForm() {
+function NewMeetupForm(props) {
   const titleInputRef = useRef();
   const imageInputRef = useRef();
   const addressInputRef = useRef();
@@ -25,7 +25,7 @@ function NewMeetupForm() {
       description: enteredDescription,
     };
 
-    console.log(meetupData);
+    props.onAddMetup(meetupData);
   }
 
   return (
@@ -36,7 +36,7 @@ function NewMeetupForm() {
           <input type="text" required id="title" ref={titleInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="image">Meetup Title</label>
+          <label htmlFor="image">Meetup Image</label>
           <input type="url" required id="image" ref={imageInputRef} />
         </div>
         <div className={classes.control}>
@@ -44,7 +44,7 @@ function NewMeetupForm() {
           <input type="text" required id="address" ref={addressInputRef} />
         </div>
         <div className={classes.control}>
-          <label htmlFor="description">Address</label>
+          <label htmlFor="description">Description</label>
           <textarea
             id="description"
             required
